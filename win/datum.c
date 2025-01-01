@@ -8,20 +8,22 @@
 #include <string.h>
 #include <time.h>
 
-char Monat[12] [10] = {"Januar", "Februar", "MÃ¤rz", "April", "Mai", "Juni",
+char Monat[12] [10] = {"Januar", "Februar", "März", "April", "Mai", "Juni",
       "Juli", "August", "September", "Oktober", "November", "Dezember"};
 char Wochentag[7] [12] = {"Sonntag", "Montag", "Dienstag", "Mittwoch",
       "Donnerstag", "Freitag", "Samstag"};
 
 int Woche,Tag,Mon,Jahr,Stunde,Minute,Sekunde;
-char Begr[80];                                /* Variable f�r die Begr��ung */
+char Begr[80];                                /* Variable für die Begrüßung */
+char Greetings[40];
 char User[20];
-struct tm *tp;                                /*   Variablenstruktur f�r    */
+struct tm *tp;                                /*   Variablenstruktur für    */
 time_t t;                                     /*          die Zeit          */
 
 int main(void)
 {
    strcpy(User, getenv("USERNAME"));
+
    time(&t);                                     /*        Zeit        */
    tp=localtime(&t);                             /*     wird geholt    */
    Woche=tp->tm_wday;                            /* Wochentag als Zahl */
@@ -32,28 +34,28 @@ int main(void)
    Minute=tp->tm_min;                            /*   aktuelle Minute  */
    Sekunde=tp->tm_sec;                           /*  aktuelle Sekunde  */
 
-   /*            Zeit wird ausgewertet und die Begr��ung gesetzt:            */
+   /*            Zeit wird ausgewertet und die Begrüßung gesetzt:            */
    if (Stunde>=0 && Stunde<=3)
-                    strcpy(Begr, "Hi, so sp�ht noch aktiv, ");
+                    sprintf(Begr, "Hi %s, so spät noch aktiv?", User);
    if (Stunde>3  && Stunde<=6)
-                    strcpy(Begr, "So fr�h am Computer? Geh' lieber ins Bett, ");
+                    sprintf(Begr, "So früh am Computer %s? Geh' lieber ins Bett", User);
    if (Stunde>6  && Stunde<=8)
-                    strcpy(Begr, "Guten Morgen! Schon so fr�h auf, ");
+                    sprintf(Begr, "Guten Morgen %s! Schon so früh auf?", User);
    if (Stunde>8  && Stunde<=12)
-                    strcpy(Begr, "Guten Morgen, ");
+                    sprintf(Begr, "Guten Morgen %s", User);
    if (Stunde>12 && Stunde<=18)
-                    strcpy(Begr, "Guten Tag, ");
+                    sprintf(Begr, "Guten Tag %s", User);
    if (Stunde>18 && Stunde<=23)
-                    strcpy(Begr, "Guten Abend, ");
-   strcat(Begr, User);
+                    sprintf(Begr, "Guten Abend %s", User);
+
    if (Mon==11 && Tag==24)
    {
-                    strcat(Begr, "\nFrohe Weihnachten ");
-                    strcat(Begr, User);
+                    sprintf(Greetings, "\nFrohe Weihnachten %s", User);
+                    strcat(Begr, Greetings);
    }
    if (Mon==11 && Tag==31)
-                    strcat(Begr, "\nIch w�nsche eine feuchtfr�hliche Silvester-Party!");
-   /*   BegrÃ¼ÃŸung, Datum und Uhrzeit werden auf StandardgerÃ¤t ausgegeben:   */
+                    strcat(Begr, "\nIch wünsche eine feuchtfröhliche Silvester-Party!");
+   /*   Begrüßung, Datum und Uhrzeit werden auf Standardgerät ausgegeben:   */
    printf("\n%s\n", Begr);
    printf("\nHeute ist %s, der %d. %s %d. Es ist %02d:%02d:%02d Uhr\n\n", Wochentag[Woche], Tag,
        Monat[Mon], Jahr, Stunde, Minute, Sekunde);
