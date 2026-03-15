@@ -37,8 +37,12 @@ void badepause_fehler(char *User) {
 
 int main(void)
 {
+   #ifdef _WIN32
+   strcpy(User, getenv("USERNAME"));
+   #else
    strcpy(User, getenv("USER"));
    User[0] = toupper(User[0]);
+   #endif
    time(&t);                                     /*        Zeit        */
    tp=localtime(&t);                             /*     wird geholt    */
    Woche=tp->tm_wday;                            /* Wochentag als Zahl */
@@ -58,15 +62,15 @@ int main(void)
       /*            Zeit wird ausgewertet und die Begrüßung gesetzt:            */
       if (Stunde>=0 && Stunde<=3)
                        sprintf(Begr, "Hi %s, so spät noch aktiv?", User);
-      if (Stunde>3  && Stunde<=6)
+      else if (Stunde>3  && Stunde<=6)
                        sprintf(Begr, "So früh am Computer %s? Geh' lieber ins Bett", User);
-      if (Stunde>6  && Stunde<=8)
+      else if (Stunde>6  && Stunde<=8)
                        sprintf(Begr, "Guten Morgen %s! Schon so früh auf?", User);
-      if (Stunde>8  && Stunde<=12)
+      else if (Stunde>8  && Stunde<=11)
                        sprintf(Begr, "Guten Morgen %s", User);
-      if (Stunde>12 && Stunde<=18)
+      else if (Stunde>11 && Stunde<=18)
                        sprintf(Begr, "Guten Tag %s", User);
-      if (Stunde>18 && Stunde<=23)
+      else
                        sprintf(Begr, "Guten Abend %s", User);     
       if (Mon==11 && Tag==24)
       {
