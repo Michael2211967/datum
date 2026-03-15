@@ -9,9 +9,8 @@ Ein plattformübergreifendes Tool (C & Python), das Datum und Uhrzeit im deutsch
 
 ## Kompilierung (C)
 ### Linux:
-bash ```
-gcc datum.c -o datum
-```
+`gcc datum.c -o datum`
+
 ### Windows:
 Verwende einen C-Compiler wie LCC oder GCC für Windows:
 `gcc datum.c -o datum.exe` 
